@@ -3,14 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_sorpresa/bloc/animal/animal_bloc.dart';
 
 
-class FormularioView extends StatefulWidget {
+class FormularioView extends StatelessWidget {
   const FormularioView({Key? key}) : super(key: key);
 
-  @override
-  State<FormularioView> createState() => _FormularioViewState();
-}
-
-class _FormularioViewState extends State<FormularioView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

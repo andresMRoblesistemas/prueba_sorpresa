@@ -22,14 +22,54 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   }
 
-  Future<void> _onValidarAnimal(
-      OnValidarAnimal event, Emitter emit) async {
+  Future<void> _onValidarAnimal(OnValidarAnimal event, Emitter emit) async {
+    try {
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          accion: "OnValidarAnimal"));
 
+      emit(state.copyWith(
+          isWorking: false,
+          error: '',
+          msjStatus: '',
+          campoError: '',
+          animal: event.animal,
+          accion: "OnValidarAnimal"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          error: e.toString(),
+          accion: "OnValidarAnimal"));
+    }
   }
+
+
 
   Future<void> _onModificarAnimal(
       OnModificarAnimal event, Emitter emit) async {
+    try {
+      String error = '';
+      AnimalModel animal = const AnimalModel();
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          accion: "OnModificarAnimal"));
+      animal =
+          state.lstAnimal.firstWhere((item) => item.id == event.idAnimal);
 
+      emit(state.copyWith(
+          isWorking: false,
+          error: error,
+          msjStatus: '',
+          animal: animal,
+          accion: "OnModificarPersona"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          error: e.toString(),
+          accion: "OnModificarPersona"));
+    }
   }
 
   Future<void> _onNuevoAnimal(OnNuevoAnimal event, Emitter emit) async {

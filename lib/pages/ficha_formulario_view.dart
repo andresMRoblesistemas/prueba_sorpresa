@@ -14,7 +14,6 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
   late AnimalModel animalModel;
   Map<String, dynamic> datos = {};
   int indice = 1;
-
   @override
   void initState() {
     animalModel = context.read<AnimalBloc>().state.animal;
@@ -33,7 +32,6 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
             listenWhen: (previous, current) => !current.isWorking,
             listener: (context, state) {
               if (state.error.isEmpty) {
-                ///Si no existe errores
                 if (state.accion == "OnValidarAnimal") {
                   context.read<AnimalBloc>().add(const OnGuardarAnimal());
                 }
@@ -49,24 +47,13 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                       .entries
                       .map((item) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Row(
-                              children: [
-                                Text(state.animal.description),
-                                TextFormField(
-                                  initialValue: (state.animal.description),
-                                  onChanged: (value) {
-                                    datos['description'] = value;
-                                  },
-                                )
-                              ],
-                            )
-                            // Text(
-                            //   titulo: item.key,
-                            //   valor: item.value,
-                            //   onChanged: (value) {
-                            //     datos[item.key] = value;
-                            //   },
-                            // ),
+                            child: _ItemFormulario(
+                              titulo: item.key,
+                              valor: item.value,
+                              onChanged: (value) {
+                                datos[item.key] = value;
+                              },
+                            ),
                           )),
 
                   Row(
@@ -77,7 +64,6 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                           onPressed: () {
                             setState(() {
                               try {
-                                datos.putIfAbsent(' $indice', () => '');
                                 indice++;
                               } catch (e) {
                                 print('error $e');
@@ -88,6 +74,9 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                       const SizedBox(width: 15),
                       ElevatedButton(
                           onPressed: () {
+                            print(datos);
+                            context.read<AnimalBloc>().add(OnValidarAnimal(
+                                animal: animalModel));
                           },
                           child: const Text('Guardar')),
                     ],
@@ -98,6 +87,32 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ItemFormulario extends StatelessWidget {
+  const _ItemFormulario({
+    Key? key,
+    required this.titulo,
+    required this.valor,
+    required this.onChanged,
+  }) : super(key: key);
+  final String titulo;
+  final String valor;
+  final Function(String) onChanged;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(titulo),
+        TextFormField(
+            controller: TextEditingController(text: valor),
+            onChanged: (value) {
+              onChanged.call(value);
+            },
+          )
+      ],
     );
   }
 }
