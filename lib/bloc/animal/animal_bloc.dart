@@ -32,9 +32,11 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   }
 
-  Future<void> _onNuevoAnimal(
-      OnNuevoAnimal event, Emitter emit) async {
-
+  Future<void> _onNuevoAnimal(OnNuevoAnimal event, Emitter emit) async {
+    emit(state.copyWith(
+        animal: const AnimalModel(),
+        error: '',
+        accion: "OnNuevoAnimal"));
   }
 
   Future<void> _onEliminaAnimal(
@@ -49,7 +51,40 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   Future<void> _onObtieneAnimal(
       OnObtieneAnimal event, Emitter emit) async {
+    try {
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          animal: const AnimalModel(),
+          lstAnimal: [],
+          accion: "OnObtieneAnimal"));
 
+      String error = '';
+
+      const List<AnimalModel> lstAnimal = [
+        AnimalModel(
+            id: '1',
+            description: "Halcon",),
+        AnimalModel(
+            id: '2',
+            description: "Gato",),
+        AnimalModel(
+            id: '3',
+            description: "Pulpo")
+      ];
+
+      emit(state.copyWith(
+          isWorking: false,
+          error: error,
+          lstAnimal: (error.isEmpty) ? lstAnimal : null,
+          accion: "OnObtieneAnimal"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          accion: "OnObtieneAnimal"
+        )
+      );
+    }
   }
 
 }

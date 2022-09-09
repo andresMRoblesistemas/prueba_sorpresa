@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_sorpresa/bloc/animal/animal_bloc.dart';
-import 'package:prueba_sorpresa/widgets/formulario_view.dart';
+import 'package:prueba_sorpresa/pages/ficha_formulario_view.dart';
+import 'package:prueba_sorpresa/pages/formulario_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,7 +29,8 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
         ),
         routes: {
-          'formulario': (context) => const FormularioView(),
+          'vista': (context) => const FormularioView(),
+          'ficha': (context) => const FichaFormularioView(),
         },
         initialRoute: 'formulario',
         builder: (context, child) {
