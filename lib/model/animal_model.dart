@@ -11,7 +11,8 @@ String animalModelToJson(AnimalModel data) =>
 class AnimalModel extends Equatable {
   const AnimalModel(
       {this.id = '',
-      this.description= '',});
+      this.description= '',
+      });
 
   final String description;
   final String id;

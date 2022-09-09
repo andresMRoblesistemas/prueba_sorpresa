@@ -7,9 +7,11 @@ class AnimalState extends Equatable {
   final String description;
   final String error;
   final String idAnimal;
+  final AnimalModel animal;
+  final List<AnimalModel> lstAnimal;
   final String msjStatus;
 
-  const AnimalState(
+  AnimalState(
     {
       this.isWorking = false,
       this.accion = '',
@@ -17,8 +19,11 @@ class AnimalState extends Equatable {
       this.description = '',
       this.error = '',
       this.idAnimal = '',
+      AnimalModel? animal,
+      List<AnimalModel>? lstAnimal,
       this.msjStatus = '',
-    });
+    }): animal = animal ?? const AnimalModel(),
+    lstAnimal = lstAnimal ?? [];
     
 AnimalState copyWith(
   {
@@ -28,6 +33,8 @@ AnimalState copyWith(
   String? description,
   String? error,
   String? idAnimal,
+  AnimalModel? animal,
+  List<AnimalModel>? lstAnimal,
   String? msjStatus,
   }) => AnimalState(
       isWorking: isWorking ?? this.isWorking,
@@ -36,6 +43,8 @@ AnimalState copyWith(
       description: description ?? this.description,
       error: error ?? this.error,
       idAnimal: idAnimal ?? this.idAnimal,
+      animal: animal ?? this.animal,
+      lstAnimal: lstAnimal ?? this.lstAnimal,
       msjStatus: msjStatus ?? this.msjStatus,
     );
 
@@ -47,6 +56,8 @@ AnimalState copyWith(
     description,
     error,
     idAnimal,
+    animal,
+    lstAnimal,
     msjStatus
   ];
   

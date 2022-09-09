@@ -7,13 +7,14 @@ part 'animal_state.dart';
 
 class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
   
-  AnimalBloc() : super( const AnimalState()) {
+  AnimalBloc() : super( AnimalState()) {
     on<OnOrdenaAnimal>(_onOrdenaAnimal);
     on<OnEliminaAnimal>(_onEliminaAnimal);
-    on<OnNuevaAnimal>(_onNuevaAnimal);
+    on<OnNuevoAnimal>(_onNuevoAnimal);
     on<OnModificarAnimal>(_onModificarAnimal);
     on<OnValidarAnimal>(_onValidarAnimal);
     on<OnGuardarAnimal>(_onGuardarAnimal);
+    on<OnObtieneAnimal>(_onObtieneAnimal);
   }
 
   Future<void> _onGuardarAnimal(
@@ -31,8 +32,8 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   }
 
-  Future<void> _onNuevaAnimal(
-      OnNuevaAnimal event, Emitter emit) async {
+  Future<void> _onNuevoAnimal(
+      OnNuevoAnimal event, Emitter emit) async {
 
   }
 
@@ -43,6 +44,11 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   Future<void> _onOrdenaAnimal(
       OnOrdenaAnimal event, Emitter emit) async {
+
+  }
+
+  Future<void> _onObtieneAnimal(
+      OnObtieneAnimal event, Emitter emit) async {
 
   }
 

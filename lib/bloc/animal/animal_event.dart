@@ -7,12 +7,12 @@ abstract class AnimalEvent extends Equatable{
   List<Object> get props => [];
 }
 
-class OnObtieneAnimales extends AnimalEvent { //no lo pidieron pero es necesario para trabajar 🤷
-  const OnObtieneAnimales();
+class OnObtieneAnimal extends AnimalEvent {
+  const OnObtieneAnimal();
 }
 
-class OnNuevaAnimal extends AnimalEvent {
-  const OnNuevaAnimal();
+class OnNuevoAnimal extends AnimalEvent {
+  const OnNuevoAnimal();
 }
 
 class OnModificarAnimal extends AnimalEvent {
