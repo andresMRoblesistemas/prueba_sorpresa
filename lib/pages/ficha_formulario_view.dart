@@ -36,7 +36,8 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                   context.read<AnimalBloc>().add(const OnGuardarAnimal());
                 }
                 if (state.accion == "OnGuardarAnimal") {
-                  Navigator.of(context).pop();
+                  Navigator.pushNamed(context, 'vista');
+                  print('guardado');
                 }
               }
             },
@@ -62,13 +63,7 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            setState(() {
-                              try {
-                                indice++;
-                              } catch (e) {
-                                print('error $e');
-                              }
-                            });
+                            Navigator.pushNamed(context, 'vista');
                           },
                           child: const Text('Cancelar')),
                       const SizedBox(width: 15),
@@ -103,15 +98,18 @@ class _ItemFormulario extends StatelessWidget {
   final Function(String) onChanged;
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(titulo),
         TextFormField(
-            controller: TextEditingController(text: valor),
-            onChanged: (value) {
-              onChanged.call(value);
-            },
-          )
+          maxLength: 100,
+          controller: TextEditingController(text: valor),
+          onChanged: (value) {
+            onChanged.call(value);
+          },
+        )
       ],
     );
   }

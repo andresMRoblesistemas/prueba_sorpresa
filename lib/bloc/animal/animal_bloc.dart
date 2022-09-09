@@ -17,9 +17,46 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
     on<OnObtieneAnimal>(_onObtieneAnimal);
   }
 
-  Future<void> _onGuardarAnimal(
-      OnGuardarAnimal event, Emitter emit) async {
+  Future<void> _onGuardarAnimal(OnGuardarAnimal event, Emitter emit) async {
+    try {
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          msjStatus: '',
+          accion: "OnGuardarAnimal"));
+      String error = '';
+      String msjStatus = '';
+      error = '';
+      AnimalModel animal = state.animal;
+      List<AnimalModel> lstAnimal = [...state.lstAnimal];
+      if (error.isEmpty) {
+        if (animal.id.isEmpty) {
+          animal = animal.copyWith(id: (lstAnimal.length + 1).toString());
+          lstAnimal.add(animal);
+        } else {
+          lstAnimal = lstAnimal.map((e) {
+            if (e.id == animal.id) {
+              return animal;
+            } else {
+              return e;
+            }
+          }).toList();
+        }
+      }
 
+      emit(state.copyWith(
+          isWorking: false,
+          error: error,
+          msjStatus: msjStatus,
+          lstAnimal: lstAnimal,
+          animal: (error.isEmpty) ? animal : null,
+          accion: "OnGuardarAnimal"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          error: e.toString(),
+          accion: "OnGuardarAnimal"));
+    }
   }
 
   Future<void> _onValidarAnimal(OnValidarAnimal event, Emitter emit) async {

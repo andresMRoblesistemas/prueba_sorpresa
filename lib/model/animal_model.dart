@@ -34,8 +34,7 @@ class AnimalModel extends Equatable {
 
   
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "description": description,
+        "Animal nuevo: ": description,
       };
 
   @override
