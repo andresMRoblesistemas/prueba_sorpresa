@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:prueba_sorpresa/bloc/animal/animal_bloc.dart';
 import 'package:prueba_sorpresa/model/animal_model.dart';
 
@@ -36,7 +37,7 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                   context.read<AnimalBloc>().add(const OnGuardarAnimal());
                 }
                 if (state.accion == "OnGuardarAnimal") {
-                  Navigator.pushNamed(context, 'vista');
+                  Navigator.pushReplacementNamed(context, 'vista');
                 }
               }
             },
@@ -47,12 +48,17 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                       .entries
                       .map((item) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: _ItemFormulario(
-                              titulo: item.key,
-                              valor: item.value,
-                              onChanged: (value) {
-                                animalModel = animalModel.copyWith(description: value);
-                              },
+                            child: Column(
+                              children: [
+                                _ItemFormulario(
+                                  titulo: item.key,
+                                  valor: item.value,
+                                  onChanged: (value) {
+                                    animalModel = animalModel.copyWith(description: value);
+                                  },
+                                ),
+                                Text(state.error, style: const TextStyle(color: Colors.red, fontSize: 10),)
+                              ],
                             ),
                           )),
 
@@ -62,7 +68,7 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                     children: [
                       ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, 'vista');
+                            Navigator.pushReplacementNamed(context, 'vista');
                           },
                           child: const Text('Cancelar')),
                       const SizedBox(width: 15),
@@ -100,7 +106,7 @@ class _ItemFormulario extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text(titulo),
+        const Text('Nuevo Animal: '),
         TextFormField(
           maxLength: 100,
           controller: TextEditingController(text: valor),

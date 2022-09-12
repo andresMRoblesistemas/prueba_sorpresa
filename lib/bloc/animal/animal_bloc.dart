@@ -91,7 +91,7 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
       AnimalModel newAnimal = state.animal;
 
       if (pagina == 0 || pagina >= 1) {
-        if (animal.description.length < 3) {
+        if (animal.description.length < 4) {
           error = 'Por favor escriba un nombre más largo';
           campoError = 'Description';
         } else {
@@ -179,7 +179,7 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
           error: '',
           accion: "OnOrdenaAnimal"));
       
-      state.lstAnimal.sort() ;
+      state.lstAnimal.sort((a, b) => a.description .compareTo(b.description));
 
       emit(state.copyWith(
           isWorking: false,

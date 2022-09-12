@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:prueba_sorpresa/bloc/animal/animal_bloc.dart';
 
 
@@ -17,7 +18,7 @@ class FormularioView extends StatelessWidget {
         listener: (context, state) {
           if (state.error.isEmpty) {
             if (state.accion == "OnNuevoAnimal" || state.accion == "OnModificarAnimal") {
-              Navigator.pushNamed(context, 'ficha');
+              Navigator.pushReplacementNamed(context, 'ficha');
             }
           } else if (state.accion == "OnEliminaAnimal" || state.accion == "OnOrdenaAnimal"){
             context.read<AnimalBloc>().add(const OnObtieneAnimal());
@@ -63,7 +64,7 @@ class FormularioView extends StatelessWidget {
                               ),
                             ),
                             InkWell(
-                              child: const Icon(Icons.delete),
+                              child: Icon(Icons.delete, color: Colors.red.shade400,),
                               onTap: () {
                                 context
                                     .read<AnimalBloc>()
@@ -74,25 +75,32 @@ class FormularioView extends StatelessWidget {
                         )
                         )
                         .toList(),
-                        
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<AnimalBloc>().add(const OnOrdenaAnimal());
-                }, 
-                child: const Text('Ordenar')
-              )
             ],
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_circle_outline_rounded, size: 40,),
-        onPressed: () {
-        context.read<AnimalBloc>().add(const OnNuevoAnimal());
-      }),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            mini: true,
+            child: const Icon(Icons.sort_by_alpha, size: 30,),
+            onPressed: () {
+            context.read<AnimalBloc>().add(const OnOrdenaAnimal());
+          }),
+          const SizedBox(width: 20,),
+          FloatingActionButton(
+            mini: true,
+            child: const Icon(Icons.add_circle_outline_rounded, size: 30,),
+            onPressed: () {
+            context.read<AnimalBloc>().add(const OnNuevoAnimal());
+          }),
+          
+        ],
+      ),
     );
   }
 }
