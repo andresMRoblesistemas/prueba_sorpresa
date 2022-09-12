@@ -37,7 +37,6 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                 }
                 if (state.accion == "OnGuardarAnimal") {
                   Navigator.pushNamed(context, 'vista');
-                  print('guardado');
                 }
               }
             },
@@ -69,7 +68,6 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                       const SizedBox(width: 15),
                       ElevatedButton(
                           onPressed: () {
-                            print(datos);
                             context.read<AnimalBloc>().add(OnValidarAnimal(
                                 animal: animalModel, pagina: 0));
                           },

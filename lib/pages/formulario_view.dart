@@ -19,8 +19,9 @@ class FormularioView extends StatelessWidget {
             if (state.accion == "OnNuevoAnimal" || state.accion == "OnModificarAnimal") {
               Navigator.pushNamed(context, 'ficha');
             }
-          } else {
-          }
+          } else if (state.accion == "OnEliminaAnimal" || state.accion == "OnOrdenaAnimal"){
+            context.read<AnimalBloc>().add(const OnObtieneAnimal());
+          } 
         },
         builder: (context, state) {
           return (state.lstAnimal.isEmpty)
@@ -37,34 +38,53 @@ class FormularioView extends StatelessWidget {
               ),
             ),
           )
-          : Center(
-            child: Container(
-              width: 500,
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                children: state.lstAnimal
-                    .map((e) => Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            context
-                                .read<AnimalBloc>()
-                                .add(OnModificarAnimal(idAnimal: e.id));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                                e.description),
-                          ),
-                        ),
-                        const Icon(Icons.delete)
-                      ],
-                    )
-                    )
-                    .toList(),
+          : Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: SizedBox(
+                  width: 500,
+                  child: ListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    children: state.lstAnimal
+                        .map((e) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                context
+                                    .read<AnimalBloc>()
+                                    .add(OnModificarAnimal(idAnimal: e.id));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                    e.description),
+                              ),
+                            ),
+                            InkWell(
+                              child: const Icon(Icons.delete),
+                              onTap: () {
+                                context
+                                    .read<AnimalBloc>()
+                                    .add(OnEliminaAnimal(description: e.description));
+                              },
+                            )
+                          ],
+                        )
+                        )
+                        .toList(),
+                        
+                  ),
+                ),
               ),
-            ),
+              ElevatedButton(
+                onPressed: () {
+                  context.read<AnimalBloc>().add(const OnOrdenaAnimal());
+                }, 
+                child: const Text('Ordenar')
+              )
+            ],
           );
         },
       ),

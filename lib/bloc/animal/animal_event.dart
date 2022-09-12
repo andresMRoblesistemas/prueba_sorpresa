@@ -21,8 +21,8 @@ class OnModificarAnimal extends AnimalEvent {
 }
 
 class OnEliminaAnimal extends AnimalEvent {
-  final String idAnimal;
-  const OnEliminaAnimal({required this.idAnimal});
+  final String description;
+  const OnEliminaAnimal({required this.description});
 }
 
 class OnOrdenaAnimal extends AnimalEvent {

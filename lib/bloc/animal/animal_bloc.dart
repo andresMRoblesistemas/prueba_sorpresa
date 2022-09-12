@@ -9,12 +9,12 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
   
   AnimalBloc() : super( AnimalState()) {
     on<OnOrdenaAnimal>(_onOrdenaAnimal);
-    on<OnEliminaAnimal>(_onEliminaAnimal);
-    on<OnNuevoAnimal>(_onNuevoAnimal);
-    on<OnModificarAnimal>(_onModificarAnimal);
-    on<OnValidarAnimal>(_onValidarAnimal);
-    on<OnGuardarAnimal>(_onGuardarAnimal);
-    on<OnObtieneAnimal>(_onObtieneAnimal);
+    on<OnEliminaAnimal>(_onEliminaAnimal); //ok
+    on<OnNuevoAnimal>(_onNuevoAnimal);  //ok
+    on<OnModificarAnimal>(_onModificarAnimal); //ok
+    on<OnValidarAnimal>(_onValidarAnimal); //ok
+    on<OnGuardarAnimal>(_onGuardarAnimal); //ok
+    on<OnObtieneAnimal>(_onObtieneAnimal); //ok
   }
 
   Future<void> _onGuardarAnimal(OnGuardarAnimal event, Emitter emit) async {
@@ -91,8 +91,8 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
       AnimalModel newAnimal = state.animal;
 
       if (pagina == 0 || pagina >= 1) {
-        if (animal.description.isEmpty) {
-          error = 'Falta Definir el Nombre';
+        if (animal.description.length < 3) {
+          error = 'Por favor escriba un nombre más largo';
           campoError = 'Description';
         } else {
           newAnimal =
@@ -146,11 +146,53 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
   Future<void> _onEliminaAnimal(
       OnEliminaAnimal event, Emitter emit) async {
+    try {
+      String error = '';
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          accion: "OnEliminaAnimal"));
+      
+      state.lstAnimal.removeWhere((item) => item.description == event.description);
+
+      emit(state.copyWith(
+          isWorking: false,
+          error: error,
+          msjStatus: '',
+          lstAnimal: state.lstAnimal,
+          accion: "OnEliminaAnimal"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          error: e.toString(),
+          accion: "OnEliminaAnimal"));
+    }
 
   }
 
   Future<void> _onOrdenaAnimal(
       OnOrdenaAnimal event, Emitter emit) async {
+      try {
+      String error = '';
+      emit(state.copyWith(
+          isWorking: true,
+          error: '',
+          accion: "OnOrdenaAnimal"));
+      
+      state.lstAnimal.sort() ;
+
+      emit(state.copyWith(
+          isWorking: false,
+          error: error,
+          msjStatus: '',
+          lstAnimal: state.lstAnimal,
+          accion: "OnOrdenaAnimal"));
+    } catch (e) {
+      emit(state.copyWith(
+          isWorking: false,
+          error: e.toString(),
+          accion: "OnOrdenaAnimal"));
+    }
 
   }
 
@@ -166,17 +208,7 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
 
       String error = '';
 
-      const List<AnimalModel> lstAnimal = [
-        AnimalModel(
-            id: '1',
-            description: "Halcon",),
-        AnimalModel(
-            id: '2',
-            description: "Gato",),
-        AnimalModel(
-            id: '3',
-            description: "Pulpo")
-      ];
+      const List<AnimalModel> lstAnimal = [];
 
       emit(state.copyWith(
           isWorking: false,
