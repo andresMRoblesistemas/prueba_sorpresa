@@ -66,18 +66,46 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
           error: '',
           accion: "OnValidarAnimal"));
 
+      final validacion = await validaAnimal(event.animal, event.pagina);
+
       emit(state.copyWith(
           isWorking: false,
-          error: '',
+          error: validacion['error'],
           msjStatus: '',
-          campoError: '',
-          animal: event.animal,
+          campoError: validacion['campoError'],
+          animal: validacion['animal'],
           accion: "OnValidarAnimal"));
     } catch (e) {
       emit(state.copyWith(
           isWorking: false,
           error: e.toString(),
           accion: "OnValidarAnimal"));
+    }
+  }
+
+  Future<Map<String, dynamic>> validaAnimal(
+      AnimalModel animal, int pagina) async {
+    try {
+      String error = '', campoError = '';
+
+      AnimalModel newAnimal = state.animal;
+
+      if (pagina == 0 || pagina >= 1) {
+        if (animal.description.isEmpty) {
+          error = 'Falta Definir el Nombre';
+          campoError = 'Description';
+        } else {
+          newAnimal =
+              newAnimal.copyWith(description: animal.description);
+        }
+      }
+      return {'error': error, 'campoError': campoError, 'animal': newAnimal};
+    } catch (e) {
+      return {
+        'error': e.toString(),
+        'campoError': 'wop',
+        'animal': const AnimalModel()
+      };
     }
   }
 
@@ -100,12 +128,12 @@ class AnimalBloc extends Bloc<AnimalEvent, AnimalState> {
           error: error,
           msjStatus: '',
           animal: animal,
-          accion: "OnModificarPersona"));
+          accion: "OnModificarAnimal"));
     } catch (e) {
       emit(state.copyWith(
           isWorking: false,
           error: e.toString(),
-          accion: "OnModificarPersona"));
+          accion: "OnModificarAnimal"));
     }
   }
 

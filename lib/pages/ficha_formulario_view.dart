@@ -52,7 +52,7 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                               titulo: item.key,
                               valor: item.value,
                               onChanged: (value) {
-                                datos[item.key] = value;
+                                animalModel = animalModel.copyWith(description: value);
                               },
                             ),
                           )),
@@ -71,7 +71,7 @@ class _FichaFormularioViewState extends State<FichaFormularioView> {
                           onPressed: () {
                             print(datos);
                             context.read<AnimalBloc>().add(OnValidarAnimal(
-                                animal: animalModel));
+                                animal: animalModel, pagina: 0));
                           },
                           child: const Text('Guardar')),
                     ],

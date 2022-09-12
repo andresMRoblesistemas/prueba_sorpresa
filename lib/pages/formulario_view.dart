@@ -37,22 +37,34 @@ class FormularioView extends StatelessWidget {
               ),
             ),
           )
-          : ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            children: state.lstAnimal
-                .map((e) => InkWell(
-                      onTap: () {
-                        context
-                            .read<AnimalBloc>()
-                            .add(OnModificarAnimal(idAnimal: e.id));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            e.description),
-                      ),
-                    ))
-                .toList(),
+          : Center(
+            child: Container(
+              width: 500,
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                children: state.lstAnimal
+                    .map((e) => Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context
+                                .read<AnimalBloc>()
+                                .add(OnModificarAnimal(idAnimal: e.id));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                                e.description),
+                          ),
+                        ),
+                        const Icon(Icons.delete)
+                      ],
+                    )
+                    )
+                    .toList(),
+              ),
+            ),
           );
         },
       ),

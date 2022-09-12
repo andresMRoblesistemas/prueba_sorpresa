@@ -31,7 +31,8 @@ class OnOrdenaAnimal extends AnimalEvent {
 
 class OnValidarAnimal extends AnimalEvent {
   final AnimalModel animal;
-  const OnValidarAnimal({required this.animal});
+  final int pagina;
+  const OnValidarAnimal({required this.animal, required this.pagina});
 }
 
 class OnGuardarAnimal extends AnimalEvent {
