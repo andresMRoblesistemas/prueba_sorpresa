@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,9 +21,11 @@ class FormularioView extends StatelessWidget {
           if (state.error.isEmpty) {
             if (state.accion == "OnNuevoAnimal" || state.accion == "OnModificarAnimal") {
               Navigator.pushReplacementNamed(context, 'ficha');
+              log("OnNuevo o OnModifica");
             }
           } else if (state.accion == "OnEliminaAnimal" || state.accion == "OnOrdenaAnimal"){
             context.read<AnimalBloc>().add(const OnObtieneAnimal());
+            log("OnElimina o OnOrdena");
           } 
         },
         builder: (context, state) {

@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:prueba_sorpresa/bloc/animal/animal_bloc.dart';
-import 'package:prueba_sorpresa/pages/ficha_formulario_view.dart';
-import 'package:prueba_sorpresa/pages/formulario_view.dart';
+import 'package:prueba_sorpresa/pages/pages.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 
 void main() {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           return Scaffold(
             body: Builder(builder: (context) {
               context.read<AnimalBloc>().add(const OnObtieneAnimal());
+              log("OnObtieneAnimal");
               return ResponsiveWrapper.builder(
                   maxWidth: 1200,
                   minWidth: 250,
